@@ -103,3 +103,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.link {
+  @apply hover:underline underline-offset-1 cursor-pointer
+}
