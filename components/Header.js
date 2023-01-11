@@ -1,7 +1,7 @@
 import React from "react";
 import User from "./User";
 
-const Header = () => {
+const Header = ({ providers }) => {
   return (
     <header className='flex justify-between items-center p-4 [&>*]:text-sm'>
       <div className='flex gap-6'>
@@ -11,7 +11,7 @@ const Header = () => {
       <div className='flex items-center gap-6'>
         <p className='link'>Gmail</p>
         <p className='link'>Images</p>
-        <User />
+        <User providers={providers} />
       </div>
     </header>
   );
