@@ -8,10 +8,20 @@ import { GrClose } from "react-icons/gr";
 import { useState } from "react";
 import { useRef } from "react";
 import Footer from "../components/Footer";
+import { useRouter } from "next/router";
 
 export default function Home({ providers }) {
+  const router = useRouter();
   const [inputActive, setInputActive] = useState(false);
   const inputRef = useRef(null);
+  const search = (e) => {
+    e.preventDefault();
+    const term = inputRef.current.value.trim();
+    if (!term) {
+      return;
+    }
+    router.push(`/search?term=${term}`);
+  };
 
   return (
     <>
@@ -26,10 +36,10 @@ export default function Home({ providers }) {
 
       <main>
         <form
-          action=''
+          onSubmit={search}
           className='w-full max-w-xl flex flex-col items-center mx-auto px-4'
         >
-          <Image className='px-16' src={googleLogo} width={400} />
+          <Image className='px-10' src={googleLogo} width={350} />
           <div
             className={`flex items-center gap-3 rounded-full pl-3.5 border-2 w-full -mt-6 hover:shadow-md overflow-hidden ${
               inputActive && "shadow-md"
@@ -51,7 +61,9 @@ export default function Home({ providers }) {
             />
           </div>
           <div className='flex gap-4 mt-6'>
-            <button className='home-btn'>Google Search</button>
+            <button type='submit' className='home-btn'>
+              Google Search
+            </button>
             <button className='home-btn'>I'm Feeling Lucky</button>
           </div>
         </form>

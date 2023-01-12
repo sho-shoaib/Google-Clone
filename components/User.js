@@ -7,7 +7,7 @@ const User = ({ providers }) => {
   if (session) {
     return (
       <div
-        className='cursor-pointer rounded-full h-9 w-9 overflow-hidden'
+        className='cursor-pointer rounded-full h-8 w-8 overflow-hidden'
         onClick={signOut}
       >
         <img
