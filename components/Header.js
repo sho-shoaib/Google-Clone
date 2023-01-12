@@ -11,7 +11,7 @@ const Header = ({ providers }) => {
       <div className='flex items-center gap-6'>
         <p className='link'>Gmail</p>
         <p className='link'>Images</p>
-        <User providers={providers} />
+        <User providers={providers} callbackUrl={"/"} />
       </div>
     </header>
   );

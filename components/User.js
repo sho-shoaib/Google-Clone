@@ -1,7 +1,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import React from "react";
 
-const User = ({ providers }) => {
+const User = ({ providers, callbackUrl }) => {
   const { data: session } = useSession();
 
   if (session) {
@@ -22,7 +22,7 @@ const User = ({ providers }) => {
   return (
     <button
       className='bg-blue-500 text-white py-3 px-6 rounded-md'
-      onClick={() => signIn(providers.google.id, { callbackUrl: "/" })}
+      onClick={() => signIn(providers.google.id, { callbackUrl })}
     >
       Sign In
     </button>
