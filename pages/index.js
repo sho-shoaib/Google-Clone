@@ -20,7 +20,7 @@ export default function Home({ providers }) {
     if (!term) {
       return;
     }
-    router.push(`/search?term=${term}`);
+    router.push(`/search?term=${term}&searchType=`);
   };
 
   return (
@@ -39,7 +39,12 @@ export default function Home({ providers }) {
           onSubmit={search}
           className='w-full max-w-xl flex flex-col items-center mx-auto px-4'
         >
-          <Image className='px-10' src={googleLogo} width={350} />
+          <Image
+            title='Google'
+            className='px-10'
+            src={googleLogo}
+            width={350}
+          />
           <div
             className={`flex items-center gap-3 rounded-full pl-3.5 border-2 w-full -mt-6 hover:shadow-md overflow-hidden ${
               inputActive && "shadow-md"

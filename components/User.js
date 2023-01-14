@@ -21,7 +21,7 @@ const User = ({ providers, callbackUrl }) => {
 
   return (
     <button
-      className='bg-blue-500 text-white py-3 px-6 rounded-md'
+      className='bg-blue-500 text-sm text-white py-3 px-6 rounded-md'
       onClick={() => signIn(providers.google.id, { callbackUrl })}
     >
       Sign In
