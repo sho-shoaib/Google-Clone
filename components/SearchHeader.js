@@ -13,8 +13,10 @@ import { GrClose } from "react-icons/gr";
 import useWindowSize from "./useWindowSize";
 import { GoSearch } from "react-icons/go";
 import { BiImage } from "react-icons/bi";
+import { useSession } from "next-auth/react";
 
 const SearchHeader = ({ providers }) => {
+  const { data: session } = useSession();
   const inputRef = useRef(null);
   const router = useRouter();
   const { term, searchType } = router.query;
@@ -77,8 +79,16 @@ const SearchHeader = ({ providers }) => {
               </div>
             </form>
             <div className='flex items-center gap-6'>
-              <FiSettings size={21} className='opacity-60 cursor-pointer' />
-              <CgMenuGridO size={22} className='opacity-60 cursor-pointer' />
+              {session && (
+                <>
+                  <FiSettings size={21} className='opacity-60 cursor-pointer' />
+                  <CgMenuGridO
+                    size={22}
+                    className='opacity-60 cursor-pointer'
+                  />
+                </>
+              )}
+
               <User
                 providers={providers}
                 callbackUrl={`/search?term=${term}`}
@@ -97,8 +107,19 @@ const SearchHeader = ({ providers }) => {
                 />
               </Link>
               <div className='flex items-center gap-6'>
-                <FiSettings size={21} className='opacity-60 cursor-pointer' />
-                <CgMenuGridO size={22} className='opacity-60 cursor-pointer' />
+                {session && (
+                  <>
+                    <FiSettings
+                      size={21}
+                      className='opacity-60 cursor-pointer'
+                    />
+                    <CgMenuGridO
+                      size={22}
+                      className='opacity-60 cursor-pointer'
+                    />
+                  </>
+                )}
+
                 <User
                   providers={providers}
                   callbackUrl={`/search?term=${term}`}
