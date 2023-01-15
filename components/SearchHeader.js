@@ -34,7 +34,7 @@ const SearchHeader = ({ providers }) => {
   return (
     <header className=''>
       <div className='w-full xl:max-w-full max-w-6xl xl:px-11 md:px-10 px-6 pt-4 pb-0.5 mx-auto'>
-        {width >= 800 ? (
+        {width > 768 ? (
           <div className='flex items-center justify-between gap-8'>
             <form
               onSubmit={(e) => search(e, "")}
