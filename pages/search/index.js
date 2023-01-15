@@ -17,6 +17,13 @@ const index = ({ providers, results }) => {
       </Head>
 
       <SearchHeader providers={providers} />
+
+      <main className='w-full xl:max-w-full max-w-6xl xl:px-48 py-2 md:px-11 px-7 h-44 mx-auto'>
+        <p className='text-sm opacity-80'>
+          About {results.searchInformation.formattedTotalResults} results (
+          {results.searchInformation.formattedSearchTime} seconds)
+        </p>
+      </main>
     </>
   );
 };
