@@ -33,7 +33,7 @@ const SearchHeader = ({ providers }) => {
 
   return (
     <header className=''>
-      <div className='w-full xl:max-w-full max-w-6xl xl:px-11 md:px-10 px-6 pt-4 pb-0.5 mx-auto'>
+      <div className='w-full xl:max-w-full max-w-6xl xl:px-11 md:px-10 px-4 pt-4 pb-0.5 mx-auto'>
         {width > 768 ? (
           <div className='flex items-center justify-between gap-8'>
             <form
@@ -163,7 +163,7 @@ const SearchHeader = ({ providers }) => {
         )}
       </div>
       <div className='w-full border-b-2'>
-        <div className='w-full xl:max-w-full max-w-6xl xl:px-44 md:px-7 px-3 mx-auto flex'>
+        <div className='w-full xl:max-w-full max-w-6xl xl:px-44 md:px-7 px-0.5 mx-auto flex'>
           <div onClick={(e) => search(e, "")} className='px-4 cursor-pointer'>
             <button
               className={`flex items-center gap-2 py-3 ${

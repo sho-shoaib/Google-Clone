@@ -5,7 +5,7 @@ import SearchHeader from "../../components/SearchHeader";
 import { getProviders } from "next-auth/react";
 import { allResults, imageResults } from "../../Response";
 import parse from "html-react-parser";
-import Link from "next/link";
+import SearchPagination from "../../components/SearchPagination";
 
 const index = ({ providers, results }) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const index = ({ providers, results }) => {
 
       <SearchHeader providers={providers} />
 
-      <main className='w-full xl:max-w-full max-w-6xl xl:px-48 py-2 md:px-11 px-7 mx-auto'>
+      <main className='w-full xl:max-w-full max-w-6xl xl:px-48 py-2 md:px-11 px-4 mx-auto'>
         <p className='text-sm opacity-80 mb-5'>
           About {results.searchInformation.formattedTotalResults} results (
           {results.searchInformation.formattedSearchTime} seconds)
@@ -36,7 +36,7 @@ const index = ({ providers, results }) => {
                   <p className='text-sm truncate text-neutral-800'>
                     {item.formattedUrl}
                   </p>
-                  <h2 className='text-blue-800 text-xl group-hover:underline truncate'>
+                  <h2 className='text-blue-800 text-xl group-hover:underline '>
                     {item.title}
                   </h2>
                 </a>
@@ -47,13 +47,15 @@ const index = ({ providers, results }) => {
             );
           })}
         </div>
+        <SearchPagination />
       </main>
     </>
   );
 };
 
 export async function getServerSideProps(context) {
-  const mockData = process.env.MOCK_DATA;
+  const mockData = true;
+  const startIndex = context.query.start || "1";
   let data;
   if (!mockData) {
     data = await fetch(
@@ -61,7 +63,7 @@ export async function getServerSideProps(context) {
         process.env.SEARCH_API_KEY
       }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
         context.query.searchType && "&searchType=image"
-      }`
+      }&start=${startIndex}`
     ).then((res) => res.json());
   } else {
     if (context.query.searchType === "images") {
