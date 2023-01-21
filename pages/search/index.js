@@ -19,7 +19,7 @@ const index = ({ providers, results, error }) => {
     return (
       <>
         <Head>
-          <title>Error - Google Clone Search</title>
+          <title>Error - Google Search Clone</title>
         </Head>
 
         <SearchHeader providers={providers} />

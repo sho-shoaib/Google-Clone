@@ -10,6 +10,7 @@ import { useRef } from "react";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 import randomWords from "random-words";
+import { Tooltip } from "@chakra-ui/react";
 
 export default function Home({ providers }) {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function Home({ providers }) {
   return (
     <>
       <Head>
-        <title>Google Clone</title>
+        <title>Google Search Clone</title>
         <meta name='description' content='Google Clone by Shoaib Shaikh' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
@@ -75,9 +76,11 @@ export default function Home({ providers }) {
               <button type='submit' className='home-btn'>
                 Google Search
               </button>
-              <button className='home-btn' onClick={(e) => search(e, true)}>
-                I'm Feeling Lucky
-              </button>
+              <Tooltip label='Search for a random word'>
+                <button className='home-btn' onClick={(e) => search(e, true)}>
+                  I'm Feeling Lucky
+                </button>
+              </Tooltip>
             </div>
           </form>
         </main>
