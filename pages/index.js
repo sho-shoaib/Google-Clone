@@ -9,12 +9,16 @@ import { useState } from "react";
 import { useRef } from "react";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
+import randomWords from "random-words";
 
 export default function Home({ providers }) {
   const router = useRouter();
   const [inputActive, setInputActive] = useState(false);
   const inputRef = useRef(null);
-  const search = (e) => {
+  const search = (e, random) => {
+    if (random) {
+      router.push(`/search?term=${randomWords()}&searchType=`);
+    }
     e.preventDefault();
     const term = inputRef.current.value.trim();
     if (!term) {
@@ -41,6 +45,7 @@ export default function Home({ providers }) {
             className='w-full max-w-xl flex flex-col items-center mx-auto px-4'
           >
             <Image
+              alt='google'
               title='Google'
               className='px-10'
               src={googleLogo}
@@ -70,7 +75,9 @@ export default function Home({ providers }) {
               <button type='submit' className='home-btn'>
                 Google Search
               </button>
-              <button className='home-btn'>I'm Feeling Lucky</button>
+              <button className='home-btn' onClick={(e) => search(e, true)}>
+                I'm Feeling Lucky
+              </button>
             </div>
           </form>
         </main>

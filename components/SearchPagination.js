@@ -111,9 +111,10 @@ const SearchPagination = () => {
               <PopoverHeader>Select Page</PopoverHeader>
               <PopoverBody>
                 <div className='flex gap-5 justify-center'>
-                  {starts.map(({ index, page }) => {
+                  {starts.map(({ index, page }, i) => {
                     return (
                       <Link
+                        key={i}
                         onClick={onClose}
                         href={`/search?term=${term}&searchType=${searchType}&start=${index}`}
                         className='link hover:text-blue-600'

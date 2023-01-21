@@ -9,13 +9,35 @@ import SearchPagination from "../../components/SearchPagination";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "../../components/Footer";
+import { Button } from "@chakra-ui/react";
 
-const index = ({ providers, results }) => {
+const index = ({ providers, results, error }) => {
   const router = useRouter();
   const { term, searchType } = router.query;
-  const myLoader = ({ src }) => {
-    return src;
-  };
+
+  if (error.isErr) {
+    return (
+      <>
+        <Head>
+          <title>Error - Google Clone Search</title>
+        </Head>
+
+        <SearchHeader providers={providers} />
+
+        <main className='w-full xl:max-w-full max-w-6xl xl:px-48 py-2 md:px-11 px-4 mx-auto'>
+          <h1 className='text-2xl font-semibold mt-10'>An Error Occurred</h1>
+          <p className='mt-2'>{error.error}</p>
+          <Button
+            className='mt-4'
+            colorScheme='blue'
+            onClick={() => router.push("/")}
+          >
+            Home
+          </Button>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
@@ -25,10 +47,10 @@ const index = ({ providers, results }) => {
 
       <SearchHeader providers={providers} />
 
-      {searchType ? (
+      {searchType === "images" ? (
         <>
           <main className='p-5 w-full flex flex-wrap gap-6'>
-            {results.items.map((item) => {
+            {results.items.map((item, i) => {
               const {
                 title,
                 displayLink,
@@ -37,6 +59,7 @@ const index = ({ providers, results }) => {
               } = item;
               return (
                 <Link
+                  key={i}
                   href={contextLink}
                   style={{ height: "180px" }}
                   className='grow mb-10 w-max group'
@@ -72,9 +95,9 @@ const index = ({ providers, results }) => {
               {results.searchInformation.formattedSearchTime} seconds)
             </p>
             <div className='flex flex-col gap-8 max-w-2xl'>
-              {results.items.map((item) => {
+              {results.items.map((item, i) => {
                 return (
-                  <div className='flex flex-col items-start gap-1'>
+                  <div key={i} className='flex flex-col items-start gap-1'>
                     <a
                       href={item.formattedUrl}
                       className='flex flex-col max-w-xl group gap-1'
@@ -105,30 +128,37 @@ const index = ({ providers, results }) => {
 };
 
 export async function getServerSideProps(context) {
-  const mockData = true;
+  const mockData = false;
   const startIndex = context.query.start || "1";
-  let data;
-  if (!mockData) {
-    data = await fetch(
-      `https://www.googleapis.com/customsearch/v1?key=${
-        process.env.SEARCH_API_KEY
-      }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
-        context.query.searchType && "&searchType=image"
-      }&start=${startIndex}`
-    ).then((res) => res.json());
-  } else {
-    if (context.query.searchType === "images") {
-      data = imageResults;
+  let data, error;
+  try {
+    if (!mockData) {
+      data = await fetch(
+        `https://www.googleapis.com/customsearch/v1?key=${
+          process.env.SEARCH_API_KEY
+        }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
+          context.query.searchType && "&searchType=image"
+        }&start=${startIndex}`
+      ).then((res) => res.json());
     } else {
-      data = allResults;
+      if (context.query.searchType === "images") {
+        data = imageResults;
+      } else {
+        data = allResults;
+      }
     }
+    error = { isErr: false, error: "" };
+  } catch (err) {
+    error = { isErr: true, error: err };
   }
+
   const providers = await getProviders();
 
   return {
     props: {
       providers,
       results: data,
+      error,
     },
   };
 }
